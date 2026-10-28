@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>K-BOX</title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="icon" href="lg3.png" type="image/png">
+
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body{
+      /* Fondo con gradiente dinámico de grises oscuros */
+      background: linear-gradient(180deg, #0d0d0f 0%, #16161b 25%, #111115 50%, #1a1a20 75%, #08080a 100%);
+      color:#e2e8f0;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* ---------------- LÍNEAS DECORATIVAS DE FONDO (RED GAMER) ---------------- */
+
+    .bg-tech-lines {
+      position: absolute;
+      top: 100vh;
+      left: 0;
+      width: 100%;
+      height: calc(100% - 100vh);
+      pointer-events: none;
+      z-index: 1;
+      overflow: hidden;
+    }
+
+    .tech-svg-main {
+      position: absolute;
+      width: 500px;
+      height: 500px;
+      opacity: 0.6;
+      animation: pulseTech 5s ease-in-out infinite alternate;
+    }
+
+    .tech-svg-main.pos-1 { top: 50px; left: -80px; }
+    .tech-svg-main.pos-2 { top: 750px; right: -80px; transform: scaleX(-1); }
+    .tech-svg-main.pos-3 { top: 1450px; left: -60px; transform: scaleY(-1); }
+
+    @keyframes pulseTech {
+      0% {
+        opacity: 0.4;
+        filter: drop-shadow(0 0 2px rgba(106, 71, 141, 0.4));
+      }
+      100% {
+        opacity: 0.85;
+        filter: drop-shadow(0 0 12px rgba(91, 194, 231, 0.7));
+      }
+    }
+
+    /* ---------------- HEADER ---------------- */
+
+    header{
+      width:100%;
+      min-height:100vh;
+      background:
+        linear-gradient(rgba(13, 13, 15, 0.75), rgba(22, 22, 27, 0.88)),
+        url("imagenes/setup.png");
+      background-size:cover;
+      background-position:center;
+      background-repeat:no-repeat;
+      color:white;
+      position: relative;
+      z-index: 10;
+    }
+
+    nav{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:20px 80px;
+      background-color: rgba(22, 22, 27, 0.85);
+      border-bottom: 2px solid rgba(106, 71, 141, 0.4);
+      backdrop-filter: blur(8px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo img{
+      width:180px;
+      height:auto;
+      object-fit:contain;
+      filter:drop-shadow(0 0 10px rgba(106,71,141,0.8));
+      transition:0.3s;
+    }
+
+    .logo img:hover{
+      transform:scale(1.05);
+    }
+
+    nav ul{
+      display:flex;
+      list-style:none;
+      gap:35px;
+      margin-left: auto;
+    }
+
+    nav ul li a{
+      text-decoration:none;
+      color:white;
+      font-weight:bold;
+      transition:0.3s;
+    }
+
+    nav ul li a:hover{
+      color:#5BC2E7;
+    }
+
+    /* ---------------- HERO ---------------- */
+
+    .hero{
+      height:calc(100vh - 90px);
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      align-items:center;
+      text-align:center;
+      padding:20px;
+    }
+
+    .hero h1{
+      font-size:85px;
+      max-width:1000px;
+      line-height:1.1;
+      color: #ffffff;
+    }
+
+    .hero span{
+      color:#5BC2E7;
+      text-shadow: 0 0 15px rgba(91, 194, 231, 0.5);
+    }
+
+    .hero p{
+      margin-top:25px;
+      font-size:20px;
+      max-width:850px;
+      line-height:1.6;
+      color: #cccccc;
+    }
+
+    .botones{
+      margin-top:40px;
+      display:flex;
+      gap:25px;
+    }
+
+    .btn{
+      padding:18px 45px;
+      text-decoration:none;
+      font-weight:bold;
+      border-radius:8px;
+      transition:0.3s;
+      display: inline-block;
+    }
+
+    .btn1{
+      border:2px solid #5BC2E7;
+      color:#5BC2E7;
+      background: rgba(91, 194, 231, 0.05);
+    }
+
+    .btn1:hover{
+      background:#5BC2E7;
+      color:#0d0d0f;
+      box-shadow: 0 0 20px rgba(91, 194, 231, 0.4);
+    }
+
+    .btn2{
+      background:#6A478D;
+      color:white;
+      border:2px solid #c9a7ff;
+    }
+
+    .btn2:hover{
+      transform:scale(1.05);
+      border:2px solid white;
+      box-shadow: 0 0 20px rgba(106, 71, 141, 0.6);
+    }
+
+    /* ---------------- SECCIONES Y CONTRASTE DE FONDOS ---------------- */
+
+    section{
+      padding:90px 80px;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Alternación de capas de fondo en escala de grises */
+    #producto {
+      background: radial-gradient(circle at center, #1b1b22 0%, #121216 100%);
+    }
+
+    #spot-publicitario {
+      background: linear-gradient(180deg, #121216 0%, #181820 50%, #121216 100%);
+    }
+
+    #nosotros {
+      background: radial-gradient(circle at 30% 50%, #202029 0%, #121216 100%);
+    }
+
+    #contacto {
+      background: linear-gradient(180deg, #121216 0%, #16161c 100%);
+    }
+
+    /* CAMBIO: Se define el color azul del tema para todos los H2 */
+    h2, .titulo {
+      text-align:center;
+      font-size:45px;
+      margin-bottom:60px;
+      color: #5BC2E7 !important;
+      text-shadow: 0 0 10px rgba(91, 194, 231, 0.3);
+    }
+
+    /* ---------------- PRODUCTO ---------------- */
+
+    .productos{
+      display:flex;
+      gap:30px;
+      justify-content:center;
+      flex-wrap:wrap;
+    }
+
+    .card{
+      width:320px;
+      background:#1f1f26;
+      border: 1px solid rgba(106, 71, 141, 0.3);
+      border-radius:15px;
+      overflow:hidden;
+      box-shadow:0 5px 25px rgba(0,0,0,0.5);
+      transition:0.3s;
+    }
+
+    .card:hover{
+      transform:translateY(-10px);
+      border-color: #5BC2E7;
+      box-shadow:0 10px 30px rgba(91, 194, 231, 0.2);
+      background:#252530;
+    }
+
+    .card img{
+      width:100%;
+      height:240px;
+      object-fit:cover;
+    }
+
+    .card .contenido{
+      padding:25px;
+    }
+
+    .card h3{
+      margin-bottom:15px;
+      font-size:25px;
+      color: #ffffff;
+    }
+
+    .card p{
+      color:#aaa;
+      line-height:1.6;
+    }
+
+    /* ---------------- SPOT PUBLICITARIO ---------------- */
+
+    .spot-container {
+      max-width: 800px;
+      margin: 0 auto;
+      border-radius: 20px;
+      overflow: hidden;
+      position: relative;
+      background: #000;
+      box-shadow: 0 10px 30px rgba(106, 71, 141, 0.4);
+      padding: 5px;
+    }
+
+    .spot-container::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: conic-gradient(
+        #00d9ff, 
+        #6A478D, 
+        #ffffff, 
+        #444444, 
+        #00d9ff
+      );
+      animation: rgbBorder 4s linear infinite;
+      z-index: 1;
+    }
+
+    @keyframes rgbBorder {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .spot-container video {
+      position: relative;
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 15px;
+      z-index: 2;
+      background: #000;
+      object-fit: cover;
+    }
+
+    /* ---------------- SOBRE NOSOTROS ---------------- */
+
+    .sobre{
+      display:flex;
+      align-items:center;
+      gap:50px;
+      flex-wrap:wrap;
+    }
+
+    .sobre img{
+      width:500px;
+      border-radius:15px;
+      box-shadow:0 5px 25px rgba(0,0,0,0.6);
+      border: 1px solid rgba(106, 71, 141, 0.3);
+    }
+
+    .texto{
+      flex:1;
+      background: rgba(30, 30, 38, 0.85);
+      border: 1px solid rgba(106, 71, 141, 0.3);
+      backdrop-filter: blur(6px);
+      padding: 30px;
+      border-radius: 15px;
+    }
+
+    .texto h2{
+      font-size:45px;
+      margin-bottom:25px;
+      text-align: left; /* Alineado a la izquierda para la sección sobre nosotros */
+    }
+
+    .texto p{
+      font-size:18px;
+      line-height:1.8;
+      color:#ccc;
+    }
+
+    /* ---------------- CONTACTO Y REDES SOCIALES ---------------- */
+
+    .contacto-container{
+      max-width:1000px;
+      margin:0 auto;
+      text-align:center;
+    }
+
+    .contacto-grid{
+      display:grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap:25px;
+      margin-top:40px;
+    }
+
+    .social-card{
+      background:#1f1f26;
+      border: 1px solid rgba(106, 71, 141, 0.3);
+      padding:30px 20px;
+      border-radius:15px;
+      text-decoration:none;
+      color:#ffffff;
+      box-shadow:0 5px 20px rgba(0,0,0,0.4);
+      transition:0.3s;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:15px;
+    }
+
+    .social-card i{
+      font-size:40px;
+      color: #6A478D;
+      transition:0.3s;
+    }
+
+    .social-card h3{
+      font-size:20px;
+      color: #ffffff;
+    }
+
+    .social-card p{
+      font-size:14px;
+      color:#aaa;
+    }
+
+    .social-card:hover{
+      transform:translateY(-8px);
+      border-color: #6A478D;
+      background:#252530;
+      box-shadow:0 10px 25px rgba(106,71,141,0.3);
+    }
+
+    .social-card.whatsapp:hover i { color:#25D366; }
+    .social-card.instagram:hover i { color:#E1306C; }
+    .social-card.tiktok:hover i { color:#ffffff; }
+    .social-card.email:hover i { color:#5BC2E7; }
+
+    /* ---------------- UBICACIÓN Y MAPA ---------------- */
+
+    .ubicacion-seccion {
+      margin-top: 60px;
+      text-align: center;
+    }
+
+    .ubicacion-seccion h3 {
+      font-size: 28px;
+      margin-bottom: 10px;
+      color: #ffffff;
+    }
+
+    .ubicacion-seccion p {
+      color: #aaa;
+      font-size: 16px;
+      margin-bottom: 25px;
+    }
+
+    .mapa-contenedor {
+      position: relative;
+      width: 100%;
+      max-width: 1000px;
+      margin: 0 auto;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 5px 25px rgba(0,0,0,0.5);
+      border: 2px solid #6A478D;
+      background: #1f1f26;
+    }
+
+    .mapa-contenedor iframe {
+      width: 100%;
+      height: 400px;
+      border: 0;
+      display: block;
+      filter: invert(90%) hue-rotate(180deg);
+    }
+
+    .btn-mapa {
+      margin-top: 20px;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* ---------------- FOOTER ---------------- */
+
+    footer{
+      background:#09090c;
+      border-top: 1px solid rgba(106, 71, 141, 0.3);
+      color:#888;
+      text-align:center;
+      padding:30px;
+      position: relative;
+      z-index: 10;
+    }
+
+    /* ---------------- RESPONSIVE ---------------- */
+
+    @media(max-width:900px){
+
+      nav{
+        flex-direction:column;
+        gap:20px;
+        padding:20px;
+      }
+
+      nav ul{
+        margin-left:0;
+        justify-content:center;
+      }
+
+      .hero h1{
+        font-size:45px;
+      }
+
+      .hero p{
+        font-size:16px;
+      }
+
+      section{
+        padding:70px 25px;
+      }
+
+      .sobre img{
+        width:100%;
+      }
+
+      .botones{
+        flex-direction:column;
+      }
+
+      .mapa-contenedor iframe {
+        height: 300px;
+      }
+
+      .tech-svg-main {
+        width: 320px;
+        height: 320px;
+        opacity: 0.35;
+      }
+
+      .spot-container {
+        max-width: 100%;
+      }
+
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <div class="bg-tech-lines">
+    <svg style="width:0;height:0;position:absolute;">
+      <defs>
+        <linearGradient id="netGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#5BC2E7" />
+          <stop offset="50%" stop-color="#6A478D" />
+          <stop offset="100%" stop-color="#5BC2E7" />
+        </linearGradient>
+      </defs>
+    </svg>
+
+    <svg class="tech-svg-main pos-1" viewBox="0 0 500 500" fill="none">
+      <path d="M0 100 L150 100 L250 200 L250 350 L400 500" stroke="url(#netGrad)" stroke-width="3" stroke-linecap="round"/>
+      <path d="M150 100 L280 20 L450 20" stroke="#6A478D" stroke-width="2" stroke-dasharray="6 6"/>
+      <path d="M250 200 L380 200 L480 300" stroke="#5BC2E7" stroke-width="2.5"/>
+      <circle cx="150" cy="100" r="6" fill="#5BC2E7"/>
+      <circle cx="250" cy="200" r="7" fill="#6A478D"/>
+      <circle cx="250" cy="350" r="5" fill="#5BC2E7"/>
+      <circle cx="380" cy="200" r="6" fill="#6A478D"/>
+    </svg>
+
+    <svg class="tech-svg-main pos-2" viewBox="0 0 500 500" fill="none">
+      <path d="M0 100 L150 100 L250 200 L250 350 L400 500" stroke="url(#netGrad)" stroke-width="3" stroke-linecap="round"/>
+      <path d="M150 100 L280 20 L450 20" stroke="#6A478D" stroke-width="2" stroke-dasharray="6 6"/>
+      <path d="M250 200 L380 200 L480 300" stroke="#5BC2E7" stroke-width="2.5"/>
+      <circle cx="150" cy="100" r="6" fill="#5BC2E7"/>
+      <circle cx="250" cy="200" r="7" fill="#6A478D"/>
+      <circle cx="380" cy="200" r="6" fill="#6A478D"/>
+    </svg>
+
+    <svg class="tech-svg-main pos-3" viewBox="0 0 500 500" fill="none">
+      <path d="M0 100 L150 100 L250 200 L250 350 L400 500" stroke="url(#netGrad)" stroke-width="3" stroke-linecap="round"/>
+      <path d="M250 200 L380 200 L480 300" stroke="#5BC2E7" stroke-width="2.5"/>
+      <circle cx="150" cy="100" r="6" fill="#5BC2E7"/>
+      <circle cx="250" cy="200" r="7" fill="#6A478D"/>
+      <circle cx="250" cy="350" r="5" fill="#5BC2E7"/>
+    </svg>
+  </div>
+
+  <header id="inicio">
+
+    <nav>
+
+      <div class="logo">
+        <img src="imagenes/logob.png" alt="Logo K-Box">
+      </div>
+
+      <ul>
+        <li><a href="index.html"s>Inicio</a></li>
+        <li><a href="producto.html">Producto</a></li>
+        <li><a href="nosotros.html">Sobre Nosotros</a></li>
+        <li><a href="#contacto">Contacto</a></li>
+      </ul>
+
+    </nav>
+
+    <div class="hero">
+
+      <h1>
+        Transforma tu setup en <span> otro nivel</span> 
+      </h1>
+
+      <p>
+        Creamos productos innovadores con diseño moderno y calidad premium 
+        para llevar tu experiencia al siguiente nivel.
+      </p>
+
+      <div class="botones">
+        <a href="nosotros.html" class="btn btn1">Conocer Más</a>
+        <a href="producto.html" class="btn btn2">Comprar Ahora</a>
+      </div>
+
+    </div>
+
+  </header>
+
+  <section id="producto">
+
+    <h2 class="titulo">Nuestro Producto</h2>
+
+    <div class="productos">
+
+      <div class="card">
+        <img src="imagenes/img4.png" alt="Producto Gamer">
+        <div class="contenido">
+          <h3>Producto Gamer</h3>
+          <p>
+            Diseño moderno y funcional pensado para mejorar tu espacio y mantener todo organizado.
+          </p>
+        </div>
+      </div>
+
+      <div class="card">
+        <img src="imagenes/vistaf.png" alt="Calidad Premium">
+        <div class="contenido">
+          <h3>Calidad</h3>
+          <p>
+            Materiales resistentes y acabados elegantes para brindar una experiencia única.
+          </p>
+        </div>
+      </div>
+
+      <div class="card">
+        <img src="imagenes/Img1.png" alt="Estilo Moderno">
+        <div class="contenido">
+          <h3>Estilo Moderno</h3>
+          <p>
+            Perfecto para setups gaming, oficinas o cualquier espacio con estilo minimalista.
+          </p>
+        </div>
+      </div>
+
+    </div>
+
+  </section>
+
+  <section id="spot-publicitario" style="text-align: center;">
+
+    <h2 class="titulo">Descubre el Setup en Acción</h2>
+
+    <div class="spot-container">
+      <video controls poster="imagenes/lgs.jpg">
+        <source src="imagenes/spot.mp4" type="video/mp4">
+        Tu navegador no soporta la reproducción de video HTML5.
+      </video>
+    </div>
+
+  </section>
+
+  <section id="nosotros">
+
+    <div class="sobre">
+
+      <img src="imagenes/gp1.jpg" alt="Equipo K-Box">
+
+      <div class="texto">
+
+        <h2>Sobre Nosotros</h2>
+
+        <p>
+          Somos un emprendimiento enfocado en crear productos innovadores, 
+          modernos y funcionales. Nuestro objetivo es ofrecer soluciones 
+          con diseño profesional que ayuden a mejorar los espacios y la 
+          experiencia de nuestros clientes.
+        </p>
+
+        <br>
+
+        <p>
+          Trabajamos con pasión por la tecnología, el diseño y la calidad, 
+          buscando siempre ofrecer productos únicos que destaquen visualmente 
+          y sean útiles en el día a día.
+        </p>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <section id="contacto">
+
+    <div class="contacto-container">
+      <h2 class="titulo" style="margin-bottom: 10px;">¡Contáctanos!</h2>
+      <p style="color: #aaa; font-size: 18px;">Haz clic en cualquiera de nuestras redes para hablar con nosotros o ver nuestro contenido.</p>
+
+      <div class="contacto-grid">
+
+        <a href="https://wa.me/573106190482" target="_blank" class="social-card whatsapp">
+          <i class="fa-brands fa-whatsapp"></i>
+          <h3>WhatsApp</h3>
+          <p>+57 310 6190482</p>
+        </a>
+
+        <a href="https://www.instagram.com/k_box64/" target="_blank" class="social-card instagram">
+          <i class="fa-brands fa-instagram"></i>
+          <h3>Instagram</h3>
+          <p>@k_box64</p>
+        </a>
+
+        <a href="https://www.tiktok.com/@k_box64" target="_blank" class="social-card tiktok">
+          <i class="fa-brands fa-tiktok"></i>
+          <h3>TikTok</h3>
+          <p>@K-box64</p>
+        </a>
+
+        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=kivox478@gmail.com" target="_blank" class="social-card email">
+          <i class="fa-solid fa-envelope"></i>
+          <h3>Correo</h3>
+          <p>kivox478@gmail.com</p>
+        </a>
+
+      </div>
+
+      <div class="ubicacion-seccion">
+        <h3>Nuestra Ubicación</h3>
+        <p>Encuéntranos en Bogotá, Colombia. ¡Visítanos o ubícanos en el mapa!</p>
+
+        <div class="mapa-contenedor">
+          <iframe 
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3977.1086695662704!2d-74.1132022241857!3d4.509818543787754!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3fa232edc07847%3A0xccf8079e37621d8f!2sLiceo%20Latinoamericano%20del%20Sur!5e0!3m2!1ses!2sco!4v1700000000000!5m2!1ses!2sco" 
+            allowfullscreen="" 
+            loading="lazy" 
+            referrerpolicy="no-referrer-when-downgrade">
+          </iframe>
+        </div>
+
+        <a href="https://maps.app.goo.gl/TcNMYgoNAyxrawjG9" target="_blank" class="btn btn2 btn-mapa">
+          <i class="fa-solid fa-map-location-dot"></i> Abrir en Google Maps
+        </a>
+      </div>
+
+    </div>
+
+  </section>
+  <footer>
+    © 2026 K-Box | Todos los derechos reservados
+  </footer>
+
+</body>
+</html>
