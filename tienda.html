@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>K-BOX</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="icon" href="lg3.png" type="image/png">
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body{
+      /* Fondo dinámico en tonos de gris oscuro */
+      background: linear-gradient(180deg, #0d0d0f 0%, #16161b 35%, #1a1a22 70%, #111115 100%);
+      color: #e2e8f0;
+      position: relative;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* =========================
+        LÍNEAS DECORATIVAS A NIVEL DE PÁGINA (GLOBALES)
+    ==========================*/
+    .global-tech-line {
+      position: fixed;
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0.85;
+    }
+
+    .global-tech-line.top-left {
+      top: 0;
+      left: 0;
+      width: 260px;
+    }
+
+    .global-tech-line.top-right {
+      top: 0;
+      right: 0;
+      width: 220px;
+    }
+
+    .global-tech-line.bottom-left {
+      bottom: 0;
+      left: 0;
+      width: 240px;
+    }
+
+    .global-tech-line.bottom-right {
+      bottom: 0;
+      right: 0;
+      width: 280px;
+    }
+
+    /* =========================
+        HEADER
+    ==========================*/
+    header {
+      width: 100%;
+      height: auto; 
+      background-color: #1a1a20; 
+      color: white;
+      border-bottom: 2px solid rgba(106, 71, 141, 0.5);
+      position: relative;
+      z-index: 10;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 80px;
+    }
+
+    .logo img {
+      width: 180px;
+      height: auto;
+      object-fit: contain;
+      filter: drop-shadow(0 0 10px rgba(106,71,141,0.8));
+      transition: 0.3s;
+    }
+
+    .logo img:hover {
+      transform: scale(1.05);
+    }
+
+    nav ul {
+      display: flex;
+      list-style: none;
+      gap: 35px;
+    }
+
+    nav ul li a {
+      text-decoration: none;
+      color: white;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    nav ul li a:hover {
+      color: #00d9ff;
+    }
+
+    /* =========================
+        ANIMACIÓN RGB PARA EL BORDE
+    ==========================*/
+    @keyframes borderRotate {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* =========================
+        SECCIÓN PRODUCTO UNICO
+    ==========================*/
+    .single-product-section {
+      width: 90%;
+      max-width: 1200px;
+      margin: 50px auto 80px;
+      position: relative;
+      z-index: 2;
+      border-radius: 20px;
+      overflow: hidden;
+      padding: 3px; /* Espacio visible para el borde animado */
+      background: #1c1c24;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+    }
+
+    /* Fondo degradado giratorio RGB adaptado a modo oscuro */
+    .single-product-section::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: conic-gradient(
+        #1a1a22, 
+        #444444, 
+        #6A478D, 
+        #00d9ff, 
+        #ffffff, 
+        #6A478D, 
+        #00d9ff, 
+        #1a1a22
+      );
+      animation: borderRotate 7s linear infinite;
+      z-index: 1;
+    }
+
+    /* Resplandor exterior (Glow) */
+    .single-product-section::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: conic-gradient(
+        #6A478D, 
+        #00d9ff, 
+        #ffffff, 
+        #6A478D, 
+        #00d9ff
+      );
+      animation: borderRotate 7s linear infinite;
+      filter: blur(15px);
+      opacity: 0.35;
+      z-index: 0;
+    }
+
+    .product-card {
+      background: #1c1c24;
+      border-radius: 17px;
+      padding: 50px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 50px;
+      align-items: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* =========================
+        GALERÍA DE IMÁGENES
+    ==========================*/
+    .product-gallery {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .main-image {
+      width: 100%;
+      height: 380px;
+      border-radius: 16px;
+      overflow: hidden;
+      background: #141419;
+      border: 1px solid rgba(106, 71, 141, 0.3);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+      position: relative;
+    }
+
+    .main-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .main-image:hover img {
+      transform: scale(1.05);
+    }
+
+    .thumbnails {
+      display: flex;
+      gap: 15px;
+    }
+
+    .thumb {
+      width: 75px;
+      height: 75px;
+      border-radius: 12px;
+      cursor: pointer;
+      object-fit: cover;
+      border: 1px solid rgba(106, 71, 141, 0.3);
+      background: #141419;
+      transition: 0.3s;
+    }
+
+    .thumb.active, .thumb:hover {
+      border-color: #00d9ff;
+      box-shadow: 0 0 12px rgba(0, 217, 255, 0.4);
+      transform: translateY(-2px);
+    }
+
+    /* =========================
+        DETALLES Y COMPRA
+    ==========================*/
+    .product-details {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .brand-tag {
+      display: inline-block;
+      color: #00d9ff;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .product-title {
+      font-size: 40px;
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 15px;
+      line-height: 1.1;
+    }
+
+    .product-description {
+      color: #aaaaaa;
+      font-size: 15px;
+      line-height: 1.6;
+      margin-bottom: 25px;
+    }
+
+    .price-container {
+      display: flex;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+
+    .price {
+      font-size: 38px;
+      font-weight: 800;
+      color: #00d9ff;
+      text-shadow: 0 0 10px rgba(0, 217, 255, 0.3);
+    }
+
+    .purchase-controls {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .quantity-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .quantity-wrapper label {
+      font-size: 14px;
+      color: #dddddd;
+      font-weight: bold;
+    }
+
+    .quantity-box {
+      display: flex;
+      align-items: center;
+      background: #141419;
+      border: 1px solid rgba(106, 71, 141, 0.4);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .qty-btn {
+      background: transparent;
+      border: none;
+      color: #00d9ff;
+      width: 40px;
+      height: 40px;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .qty-btn:hover {
+      background: #6A478D;
+      color: white;
+    }
+
+    .qty-input {
+      width: 45px;
+      text-align: center;
+      background: transparent;
+      border: none;
+      color: #ffffff;
+      font-weight: bold;
+      font-size: 16px;
+    }
+
+    .buy-btn {
+      width: 100%;
+      padding: 18px;
+      border: none;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #6A478D 0%, #4a2f69 100%);
+      color: #ffffff;
+      font-size: 16px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 8px 20px rgba(106, 71, 141, 0.4);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+
+    .buy-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 25px rgba(0, 217, 255, 0.6);
+      background: linear-gradient(135deg, #00d9ff 0%, #0099b8 100%);
+      color: #0d0d0f;
+    }
+
+    /* =========================
+        RESPONSIVE
+    ==========================*/
+    @media (max-width: 900px) {
+      nav { padding: 20px 30px; }
+      
+      .product-card {
+        grid-template-columns: 1fr;
+        padding: 35px 20px;
+        gap: 30px;
+      }
+
+      .main-image { height: 280px; }
+      .product-title { font-size: 30px; }
+      
+      .global-tech-line { opacity: 0.4; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <svg class="global-tech-line top-left" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M-20 40 L120 180 M-20 70 L120 210 M-20 100 L120 240" stroke="#6A478D" stroke-width="4" stroke-linecap="round" opacity="0.6"/>
+    <path d="M-20 10 L100 130" stroke="#00d9ff" stroke-width="4" stroke-linecap="round" opacity="0.8"/>
+  </svg>
+
+  <svg class="global-tech-line top-right" viewBox="0 0 200 150" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M50 0 L200 150 M90 0 L200 110 M130 0 L200 70" stroke="url(#gradRight)" stroke-width="4" stroke-linecap="round"/>
+    <defs>
+      <linearGradient id="gradRight" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#00d9ff" />
+        <stop offset="100%" stop-color="#6A478D" />
+      </linearGradient>
+    </defs>
+  </svg>
+
+  <svg class="global-tech-line bottom-left" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0 130 L130 200 M0 90 L160 180 M0 50 L190 160" stroke="#6A478D" stroke-width="3.5" stroke-linecap="round" opacity="0.5"/>
+    <circle cx="30" cy="170" r="6" fill="#00d9ff" />
+  </svg>
+
+  <svg class="global-tech-line bottom-right" viewBox="0 0 220 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M60 220 L220 60 M100 220 L220 100 M140 220 L220 140" stroke="url(#gradBottom)" stroke-width="4" stroke-linecap="round"/>
+    <defs>
+      <linearGradient id="gradBottom" x1="0%" y1="100%" x2="100%" y2="0%">
+        <stop offset="0%" stop-color="#6A478D" />
+        <stop offset="100%" stop-color="#00d9ff" />
+      </linearGradient>
+    </defs>
+  </svg>
+
+  <header class="main-header">
+    <nav>
+      <div class="logo">
+        <img src="imagenes/log2.png" alt="Logo K-Box">
+      </div>
+
+      <ul>
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="producto.html">Producto</a></li>
+        <li><a href="nosotros.html">Sobre Nosotros</a></li>
+        <li><a href="index.html#contacto">Contacto</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="single-product-section">
+    <div class="product-card">
+
+      <div class="product-gallery">
+        <div class="main-image">
+          <img id="currentImg" src="imagenes/dis1.png" alt="K-BOX Pro Edition">
+        </div>
+        <div class="thumbnails">
+          <img src="imagenes/dis1.png" class="thumb active" onclick="changeImage(this.src, this)" alt="Vista 1">
+          <img src="imagenes/dig1.png" class="thumb" onclick="changeImage(this.src, this)" alt="Vista 2">
+          <img src="imagenes/dis3.png" class="thumb" onclick="changeImage(this.src, this)" alt="Vista 3">
+          <img src="imagenes/dis4.png" class="thumb" onclick="changeImage(this.src, this)" alt="Vista 4">
+        </div>
+      </div>
+
+      <div class="product-details">
+        <span class="brand-tag">Toma el Mando</span>
+        <h1 class="product-title">K-BOX</h1>
+        
+        <p class="product-description">
+          Optimiza y organiza tu setup al máximo nivel. Diseñado con materiales de alto rendimiento, acabados premium e iluminación ambiental integrada para brindarte el control total de tu estación gamer.
+        </p>
+
+        <div class="price-container">
+          <span class="price">40.000 COP</span>
+        </div>
+
+        <div class="purchase-controls">
+          <div class="quantity-wrapper">
+            <label for="quantity">Cantidad:</label>
+            <div class="quantity-box">
+              <button class="qty-btn" onclick="updateQty(-1)">-</button>
+              <input type="text" id="quantity" class="qty-input" value="1" readonly>
+              <button class="qty-btn" onclick="updateQty(1)">+</button>
+            </div>
+          </div>
+
+          <a href="https://wa.me/3106190482?text=Hola,%20quiero%20comprar%20el%20K-BOX" target="_blank" class="buy-btn">
+            <i class="fa-brands fa-whatsapp"></i> Compra ahora
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <script>
+    function changeImage(src, element) {
+      document.getElementById('currentImg').src = src;
+      const thumbs = document.querySelectorAll('.thumb');
+      thumbs.forEach(t => t.classList.remove('active'));
+      element.classList.add('active');
+    }
+
+    function updateQty(amount) {
+      const input = document.getElementById('quantity');
+      let currentVal = parseInt(input.value);
+      currentVal += amount;
+      if (currentVal < 1) currentVal = 1;
+      input.value = currentVal;
+    }
+  </script>
+
+</body>
+</html>
